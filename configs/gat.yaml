@@ -1,0 +1,54 @@
+# GAT (Graph Attention Network) configuration
+
+# Model configuration
+model:
+  type: "gat"
+  hidden_channels: 64
+  out_channels: 64
+  num_layers: 2
+  num_heads: 4
+  dropout: 0.5
+  use_batch_norm: true
+  distance_metric: "euclidean"
+
+# Data configuration
+data:
+  dataset: "Cora"
+  data_dir: "data"
+  normalize_features: true
+  make_undirected: true
+
+# Few-shot learning configuration
+few_shot:
+  num_ways: 5
+  num_support: 1
+  num_query: 5
+  episodes_per_epoch: 100
+  val_episodes: 50
+  test_episodes: 100
+
+# Training configuration
+training:
+  num_epochs: 100
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  patience: 10
+  checkpoint_dir: "checkpoints"
+
+# Evaluation configuration
+evaluation:
+  num_episodes: 100
+  shots_to_evaluate: [1, 2, 3, 5, 10]
+  ways_to_evaluate: [2, 3, 5, 7, 10]
+
+# Logging configuration
+logging:
+  log_dir: "logs"
+  log_level: "INFO"
+  use_wandb: false
+
+# Device configuration
+device:
+  type: "auto"
+  deterministic: true
+  seed: 42

@@ -1,0 +1,82 @@
+# Default configuration for Graph Few-Shot Learning
+
+# Model configuration
+model:
+  type: "gcn"  # Options: gcn, gat
+  hidden_channels: 64
+  out_channels: 64
+  num_layers: 2
+  dropout: 0.5
+  use_batch_norm: true
+  use_residual: false
+  distance_metric: "euclidean"  # Options: euclidean, cosine
+
+# Data configuration
+data:
+  dataset: "Cora"  # Options: Cora, CiteSeer, PubMed, CoraFull, synthetic
+  data_dir: "data"
+  normalize_features: true
+  make_undirected: true
+  
+  # Synthetic dataset parameters (used when dataset="synthetic")
+  synthetic:
+    num_nodes: 1000
+    num_features: 64
+    num_classes: 7
+    edge_prob: 0.01
+
+# Few-shot learning configuration
+few_shot:
+  num_ways: 5
+  num_support: 1
+  num_query: 5
+  episodes_per_epoch: 100
+  val_episodes: 50
+  test_episodes: 100
+
+# Training configuration
+training:
+  num_epochs: 100
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  patience: 10
+  batch_size: 1  # Not used in few-shot learning, kept for compatibility
+  
+  # Optimization
+  optimizer: "adam"
+  scheduler: "reduce_on_plateau"
+  
+  # Checkpointing
+  checkpoint_dir: "checkpoints"
+  save_best: true
+  save_last: true
+
+# Evaluation configuration
+evaluation:
+  num_episodes: 100
+  shots_to_evaluate: [1, 2, 3, 5, 10]
+  ways_to_evaluate: [2, 3, 5, 7, 10]
+  save_embeddings: true
+  save_plots: true
+
+# Logging configuration
+logging:
+  log_dir: "logs"
+  log_level: "INFO"
+  use_wandb: false
+  wandb_project: "graph-few-shot-learning"
+  wandb_entity: null
+
+# Device configuration
+device:
+  type: "auto"  # Options: auto, cuda, mps, cpu
+  deterministic: true
+  seed: 42
+
+# Visualization configuration
+visualization:
+  save_plots: true
+  plot_dir: "assets/plots"
+  figure_size: [10, 6]
+  dpi: 300
+  style: "seaborn-v0_8"
